@@ -41,6 +41,18 @@ class CuboAI:
         self.functions.append(self.R)
         self.functions.append(self.R_prima)
 
+
+
+    def set_sides(self, sides):
+        self.top = sides[0]
+        self.front = sides[1]
+        self.right = sides[2]
+        self.left = sides[3]
+        self.back = sides[4]
+        self.down = sides[5]
+
+
+
     def randomize(self):
         for i in range(50):
             self.functions[random.randint(0, 11)]()

@@ -3,7 +3,7 @@ from time import sleep
 from ursina import *
 from cube import Rubik, Side
 from movimientos import CuboAI, change_values
-import movimientos
+from interfaz_eleccion import select_colors
 
 app = Ursina()
 rubik_ai = CuboAI()
@@ -15,12 +15,25 @@ rubik = Rubik(rubik_ai, colors)
 button_randon = Button("Randomize", parent=camera.ui,position = (-0.2,-0.42), scale = (0.17, 0.06))
 solve_button = Button("Solve", parent=camera.ui, position = (0.1, -0.42), scale = (0.13, 0.06))
 next_button = Button(">", parent=camera.ui, position= (0.2, -0.42), scale = (0.06, 0.06))
+button_import_rubik = Button("Import", parent=camera.ui, position = (0.4, -0.42), scale = (0.13, 0.06))
 
 
 #An iterator to access to movements_array
 iterator = 0
 movments_array = []
 
+
+def import_rubik():
+    global rubik
+    global iterator
+    sides = select_colors()
+    rubik_ai.set_sides(sides)
+    rubik.destroy()
+    rubik = Rubik(rubik_ai, colors)
+    rubik.front_center.square.input = spin
+    iterator = 0
+
+#Randomize event
 def random_rubik():
     global iterator
     global rubik
@@ -145,6 +158,7 @@ def solve(mov):
 button_randon._on_click = random_rubik
 solve_button._on_click = solve_event
 next_button._on_click = next_event
+button_import_rubik._on_click = import_rubik
 rubik.front_center.square.input = spin
 
 
